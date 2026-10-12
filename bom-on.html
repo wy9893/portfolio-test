@@ -112,36 +112,22 @@
       object-fit: cover;
     }
 
-    @media (max-width: 600px) {
-      .content { padding: 35px 20px 80px; }
-      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .cover p { font-size: 16px; }
-      
-.cover {
-  height: 49vw;
-  min-height: 0;
-  padding: 0 20px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.cover > div {
-  width: 100%;
-  text-align: center;
-  margin-top: 10vw;
-  transform: none;
-}
-
-  .brand-logo {
-    width: 100px;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto 25px;
-  }
-
+@media (max-width: 600px) {
+    .content {
+        padding: 35px 20px 80px;
     }
+
+    .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .brand-logo {
+        width: 100px;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto 25px;
+    }
+}
     
 
 /* 작업물 카드 마우스 오버 효과 */
