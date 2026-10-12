@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LG전자 베스트샵 | CitrusAvenue</title>
+  <style>
+    @font-face {
+  font-family: 'Chetta Vissto';
+  src: url('./ChettaVissto.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f8f7f3;
+      font-family: Arial, sans-serif;
+      color: #171717;
+    }
+
+    .page {
+      min-height: 100vh;
+      background-image: url("portfolio-bg.jpg");
+      background-position: center top;
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+    }
+
+    
+.cover {
+  height: 49vw;
+  max-height: none;
+  min-height: 300px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15%;
+  text-align: center;
+  color: white;
+}
+
+.cover h1 {
+  margin: 0;
+  font-family: 'Chetta Vissto', Georgia, serif;
+  font-weight: normal;
+  font-size: clamp(42px, 6vw, 84px);
+  line-height: 1;
+}
+
+.cover p {
+  margin: 0 0 8px;
+  font-family: 'Chetta Vissto', Georgia, serif;
+  font-size: clamp(17px, 2.4vw, 30px);
+}
+
+
+    .content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 70px 30px 120px;
+      text-align: center;
+    }
+
+.back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  border: 2px solid #888;
+  border-radius: 50%;
+
+  color: #888;
+  text-decoration: none;
+
+  margin-top: 50px;
+  margin-bottom: 45px;
+}
+
+.back svg {
+  width: 30px;
+  height: 30px;
+}
+
+    .brand-logo {
+      width: 250px;
+      max-width: 75%;
+      display: block;
+      margin: 0 auto 70px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .gallery a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .gallery img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+
+    @media (max-width: 600px) {
+      .content { padding: 35px 20px 80px; }
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cover p { font-size: 16px; }
+    }
+    
+
+/* 작업물 카드 마우스 오버 효과 */
+.gallery a {
+  display: block;
+  overflow: hidden;
+}
+
+.gallery a img {
+  transition: transform 0.4s ease;
+}
+
+.gallery a:hover img {
+  transform: scale(1.12);
+}
+
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 55px auto 0;
+}
+
+.pagination button {
+  min-width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: #777;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  color: #222;
+  font-weight: bold;
+  border-bottom: 2px solid #222;
+}
+
+.pagination button:hover {
+  color: #222;
+}
+
+.pagination button:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="cover">
+      <div>
+        <p>CitrusAvenue's</p>
+        <h1>Portfolio</h1>
+      </div>
+    </header>
+
+    <main class="content">
+      <a href="index.html" class="back" aria-label="메인으로 돌아가기">
+  <svg viewBox="0 0 48 48" fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 7L5 24L22 41"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+    <path d="M6 24H43"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"/>
+  </svg>
+</a>
+
+      <img
+        class="brand-logo"
+        src="./kbpay.svg"
+        alt="KB Pay"
+      >
+
+      
+<div class="gallery" id="projectGallery"></div>
+
+<div class="pagination" id="pagination"></div>
+
+    </main>
+  </div>
+  
+<script>
+const projectsPerPage = 12;
+const pageNumbersPerGroup = 5;
+
+let projects = [];
+let currentPage = 1;
+
+async function loadProjects() {
+  try {
+    
+const response = await fetch("./kbpay-projects.json");
+
+
+    if (!response.ok) {
+      throw new Error("작업물 목록을 불러오지 못했습니다.");
+    }
+
+    projects = await response.json();
+    renderProjects();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function renderProjects() {
+  const gallery = document.getElementById("projectGallery");
+  gallery.innerHTML = "";
+
+  const start = (currentPage - 1) * projectsPerPage;
+  const visibleProjects = projects.slice(
+    start,
+    start + projectsPerPage
+  );
+
+  visibleProjects.forEach((project) => {
+    const link = document.createElement("a");
+    link.href = project.detail;
+
+    const img = document.createElement("img");
+    img.src = project.cover;
+    img.alt = project.id + " 작업물";
+
+    link.appendChild(img);
+    gallery.appendChild(link);
+  });
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const pagination = document.getElementById("pagination");
+  pagination.innerHTML = "";
+
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+  if (totalPages <= 1) return;
+
+  const groupStart =
+    Math.floor((currentPage - 1) / pageNumbersPerGroup) *
+      pageNumbersPerGroup + 1;
+
+  const groupEnd = Math.min(
+    totalPages,
+    groupStart + pageNumbersPerGroup - 1
+  );
+
+  function addButton(label, targetPage, disabled, active = false) {
+    const button = document.createElement("button");
+    button.textContent = label;
+    button.disabled = disabled;
+    button.classList.toggle("active", active);
+    button.onclick = () => {
+      currentPage = targetPage;
+      renderProjects();
+      document.getElementById("projectGallery")
+        .scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    pagination.appendChild(button);
+  }
+
+  if (totalPages > pageNumbersPerGroup) {
+    addButton("‹", Math.max(1, groupStart - 1), groupStart === 1);
+  }
+
+  for (let page = groupStart; page <= groupEnd; page++) {
+    addButton(String(page), page, false, page === currentPage);
+  }
+
+  if (totalPages > pageNumbersPerGroup) {
+    addButton(
+      "›",
+      Math.min(totalPages, groupEnd + 1),
+      groupEnd === totalPages
+    );
+  }
+}
+
+loadProjects();
+</script>
+
+</body>
+</html>
