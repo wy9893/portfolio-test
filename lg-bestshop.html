@@ -166,7 +166,21 @@
   opacity: 0.25;
   cursor: default;
 }
+/* 첫 화면을 제외한 페이지의 상단 표지 제거 */
+.cover {
+    display: none !important;
+}
 
+/* 표지 없이 콘텐츠 바로 표시 */
+.content {
+    padding-top: 60px;
+}
+
+@media (max-width: 600px) {
+    .content {
+        padding-top: 35px;
+    }
+}
   </style>
 </head>
 
