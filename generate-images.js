@@ -30,11 +30,12 @@ const getNumber = (file) =>
   return getNumber(b) - getNumber(a);
 });
 
-const projects = coverFiles.map((cover) => {
-  const match = cover.match(/^work(\d+)(?:_(.+))?\.(jpg|jpeg|png|webp)$/i);
 
-  const project = "work" + match[1];
-  const filenameTitle = match[2] || "";
+const projects = coverFiles.map((cover) => {
+  const match = cover.match(/^(work|paiks|bomon|kbpay)(\d+)(?:_(.+))?\.(jpg|jpeg|png|webp)$/i);
+
+  const project = match[1].toLowerCase() + match[2];
+  const filenameTitle = match[3] || "";
 
   // 기존 정보가 있으면 우선 사용
   const info = projectInfo[project] || {};
