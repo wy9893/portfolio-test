@@ -95,58 +95,65 @@
     }
 
    
+
+/* 모바일 전용 */
 @media (max-width: 650px) {
 
   /* 상단 표지 */
-  
+  .cover {
+    height: 49vw;
+    min-height: 0;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
 
-.cover {
-  height: 49vw;
-  min-height: 0;
-  padding: 0 20px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
+  .cover > div {
+    width: 100%;
+    text-align: center;
+    margin-top: 10vw;
+    transform: none;
+  }
 
-.cover > div {
-  width: 100%;
-  text-align: center;
-  transform: none;
-  margin-top: 10vw;
-}
-
+  .cover p {
+    font-size: clamp(15px, 3.4vw, 20px);
+    margin-bottom: 5px;
+  }
 
   .cover h1 {
-    font-size: clamp(42px, 11vw, 60px);
+    font-size: clamp(40px, 8vw, 56px);
   }
 
   /* Contractor 영역 */
   .content {
-    padding-top: 0;
+    padding: 22px 24px 55px;
   }
 
   .content h2 {
-    font-size: 42px;
+    font-size: clamp(30px, 6vw, 42px);
     margin-bottom: 30px;
   }
 
-  /* 업체 로고 2열 배치 */
+  /* 업체 로고 */
   .clients {
-    gap: 24px 14px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 18px;
   }
 
   .client {
-    font-size: 14px;
+    min-height: 70px;
   }
 
   .client img,
   .client:first-child img {
-    max-width: 140px;
     width: 100%;
-    height: 65px;
+    max-width: 140px;
+    height: 55px;
     object-fit: contain;
+    margin: 0 auto;
+    display: block;
   }
 }
 
