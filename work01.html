@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>작업물 01 | CitrusAvenue</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f7f3;
+      color: #222;
+    }
+
+    .page {
+      min-height: 100vh;
+      background-image: url("portfolio-bg.jpg");
+      background-position: center top;
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+    }
+
+    .content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 70px 30px 120px;
+    }
+
+    .back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 2px solid #888;
+      border-radius: 50%;
+      color: #888;
+      text-decoration: none;
+      margin: 50px 0 60px;
+    }
+
+    .back svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .artwork {
+      display: block;
+      width: 100%;
+      max-width: 850px;
+      height: auto;
+      margin: 0 auto;
+      cursor: zoom-in;
+    }
+
+    .hint {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      border: 0;
+      background: none;
+      color: white;
+      font-size: 38px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .content {
+        padding: 35px 20px 80px;
+      }
+
+      .lightbox {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <main class="content">
+
+      <a href="lg-bestshop.html" class="back"
+         aria-label="작업물 목록으로 돌아가기">
+        <svg viewBox="0 0 48 48" fill="none"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 7L5 24L22 41"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+          <path d="M6 24H43"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"/>
+        </svg>
+      </a>
+
+      <h1>LG전자 베스트샵</h1>
+
+      <img
+        class="artwork"
+        src="work01.jpg"
+        alt="LG전자 베스트샵 작업물 01"
+        onclick="openLightbox()"
+      >
+
+      <p class="hint">이미지를 클릭하면 크게 볼 수 있습니다.</p>
+
+    </main>
+  </div>
+
+  <div class="lightbox" id="lightbox"
+       onclick="closeLightbox()">
+    <button class="close" onclick="closeLightbox()"
+            aria-label="닫기">×</button>
+    <img src="work01.jpg" alt="확대 이미지">
+  </div>
+
+  <script>
+    function openLightbox() {
+      document.getElementById("lightbox").classList.add("open");
+    }
+
+    function closeLightbox() {
+      document.getElementById("lightbox").classList.remove("open");
+    }
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
