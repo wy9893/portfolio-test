@@ -165,6 +165,19 @@ if (logo) {
   html = html.replace(/lg-bestshop\.svg/g, logo);
 }
 
+const backLinkMap = {
+  work: "lg-bestshop.html",
+  paiks: "paiks.html",
+  bomon: "bom-on.html",
+  kbpay: "kbpay.html"
+};
+
+const backLink = backLinkMap[prefix];
+
+if (backLink) {
+  html = html.replace(/lg-bestshop\.html/g, backLink);
+}
+
 
     html = html.replace(
       /work01-images\.json/g,
