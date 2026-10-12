@@ -336,10 +336,12 @@
 </div>
 
 
-<p class="project-info">
+
+<p class="project-info" id="projectTitle">
   카드뉴스 / LG전자 베스트샵 더현대 서울 / Open Sale
 </p>
-<p class="project-date">2026. 10. 02</p>
+<p class="project-date" id="projectDate">2026. 10. 02</p>
+
 
 
       <p class="hint">이미지를 클릭하면 크게 볼 수 있습니다.</p>
@@ -440,6 +442,31 @@ function slideThumbnails(direction) {
     0,
     Math.min(maxStart, thumbnailStart + direction)
   );
+
+async function loadProjectInfo() {
+  try {
+    const response = await fetch("./project-info.json");
+    if (!response.ok) throw new Error("작업물 정보를 불러오지 못했습니다.");
+
+    const allInfo = await response.json();
+
+    const projectId =
+      window.location.pathname.match(/work\d+(?=\.html)/i)?.[0] || "work01";
+
+    const info = allInfo[projectId];
+    if (!info) return;
+
+    document.getElementById("projectTitle").textContent =
+      info.title || "";
+
+    document.getElementById("projectDate").textContent =
+      info.date || "";
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+loadProjectInfo();
 
   loadImages();
 }
