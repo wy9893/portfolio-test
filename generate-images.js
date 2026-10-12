@@ -14,7 +14,7 @@ coverFiles.sort((a, b) => {
   const getNumber = (file) =>
     Number(file.match(/^work(\d+)/i)[1]);
 
-  return getNumber(a) - getNumber(b);
+  return getNumber(b) - getNumber(a);
 });
 
 const projects = coverFiles.map((cover) => {
