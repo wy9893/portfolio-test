@@ -50,12 +50,36 @@
       height: 30px;
     }
 
-    h1 {
-  font-size: 28px;
-  font-weight: 500;
+.cover {
+  height: 43vw;
+  max-height: 650px;
+  min-height: 300px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15%;
+  color: white;
   text-align: center;
-  margin-top: 550px;
-  margin-bottom: 50px;
+}
+
+.cover p {
+  margin: 0;
+  font-size: 24px;
+}
+
+.cover h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(52px, 7vw, 110px);
+  font-weight: normal;
+}
+
+.brand-logo {
+  display: block;
+  width: 250px;
+  max-width: 75%;
+  height: auto;
+  margin: 0 auto 50px;
 }
 
     .artwork {
@@ -121,6 +145,14 @@
 
 <body>
   <div class="page">
+
+    <header class="cover">
+      <div>
+        <p>CitrusAvenue's</p>
+        <h1>Portfolio</h1>
+      </div>
+    </header>
+
     <main class="content">
 
       <a href="lg-bestshop.html" class="back"
@@ -139,7 +171,11 @@
         </svg>
       </a>
 
-      <h1>LG전자 베스트샵</h1>
+      <img
+  class="brand-logo"
+  src="./lg-bestshop.svg"
+  alt="LG전자 베스트샵"
+>
 
       <img
         class="artwork"
