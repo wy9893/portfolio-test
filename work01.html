@@ -373,17 +373,29 @@
 
  
 
-<script>
-const images = [
-  "work01.jpg",
-  "work01-02.jpg",
-  "work01-03.jpg",
-  "work01-04.jpg",
-  "work01-05.jpg",
-  "work01-06.jpg",
-  "work01-07.jpg",
-  "work01-08.jpg"
-];
+
+let images = [];
+
+async function loadImages() {
+  try {
+    const response = await fetch("./work01-images.json");
+
+    if (!response.ok) {
+      throw new Error("이미지 목록을 불러오지 못했습니다.");
+    }
+
+    images = await response.json();
+
+    if (images.length === 0) {
+      throw new Error("등록된 이미지가 없습니다.");
+    }
+
+    changeArtwork(0);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 let currentIndex = 0;
 let thumbnailStart = 0;
@@ -432,7 +444,7 @@ function slideThumbnails(direction) {
     Math.min(maxStart, thumbnailStart + direction)
   );
 
-  renderThumbnails();
+  loadImages();
 }
 
 // 큰 이미지 변경
