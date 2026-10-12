@@ -63,6 +63,12 @@ fs.writeFileSync(
 
 console.log("총 " + projects.length + "개 작업물 등록 완료");
 
+const infoPath = path.join(__dirname, "project-info.json");
+
+const projectInfo = fs.existsSync(infoPath)
+  ? JSON.parse(fs.readFileSync(infoPath, "utf8"))
+  : {};
+
 const templatePath = path.join(__dirname, "work01.html");
 
 if (fs.existsSync(templatePath)) {
@@ -84,6 +90,21 @@ if (fs.existsSync(templatePath)) {
       /work01\.jpg/g,
       project.cover
     );
+
+const info = projectInfo[project.id] || {};
+
+const title = info.title || project.id;
+const date = info.date || "";
+
+html = html.replace(
+  "카드뉴스 / LG전자 베스트샵 더현대 서울 / Open Sale",
+  title
+);
+
+html = html.replace(
+  "2026. 10. 02",
+  date
+);
 
     // 상세 페이지 자동 생성
     fs.writeFileSync(
