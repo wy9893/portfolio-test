@@ -21,13 +21,10 @@
       color: #171717;
     }
 
-    .page {
-      min-height: 100vh;
-      background-image: url("portfolio-bg.jpg");
-      background-position: center top;
-      background-size: 100% auto;
-      background-repeat: no-repeat;
-    }
+   .page {
+    min-height: 100vh;
+    background-color: #f8f7f3;
+}
 
     
 .cover {
@@ -177,7 +174,33 @@
   opacity: 0.25;
   cursor: default;
 }
+.gallery {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    margin: 0 auto;
+}
 
+.gallery a {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
   </style>
 </head>
 
