@@ -96,7 +96,13 @@ projects.forEach((project) => {
 
 fs.writeFileSync(
   path.join(__dirname, "project-info-generated.json"),
-  JSON.stringify(generatedInfo, null, 2),
+  
+JSON.stringify(generatedInfo, null, 2).replace(
+  /[\u007F-\uFFFF]/g,
+  (character) =>
+    "\\u" + character.charCodeAt(0).toString(16).padStart(4, "0")
+),
+
   "utf8"
 );
 
