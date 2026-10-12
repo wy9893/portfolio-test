@@ -150,6 +150,21 @@ if (fs.existsSync(templatePath)) {
     if (project.id === "work01") return;
 
     let html = template;
+    
+const logoMap = {
+  work: "lg-bestshop.svg",
+  paiks: "paiks.svg",
+  bomon: "bom-on.svg",
+  kbpay: "kbpay.svg"
+};
+
+const prefix = project.id.match(/^[a-z]+/i)[0];
+const logo = logoMap[prefix];
+
+if (logo) {
+  html = html.replace(/lg-bestshop\.svg/g, logo);
+}
+
 
     html = html.replace(
       /work01-images\.json/g,
