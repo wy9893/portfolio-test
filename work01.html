@@ -99,6 +99,41 @@
   cursor: zoom-in;
 }
 
+.thumbnails {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 6px;
+  max-width: 850px;
+  margin: 28px auto 0;
+}
+
+.thumbnails img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  cursor: pointer;
+  opacity: 0.65;
+  border: 2px solid transparent;
+}
+
+.thumbnails img.selected {
+  opacity: 1;
+  border-color: #888;
+}
+
+.project-info {
+  margin: 40px 0 12px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.project-date {
+  margin: 0;
+  text-align: center;
+  font-size: 15px;
+}
+
     .hint {
       text-align: center;
       color: #888;
@@ -185,12 +220,31 @@
   alt="LG전자 베스트샵"
 >
 
-      <img
-        class="artwork"
-        src="work01.jpg"
-        alt="LG전자 베스트샵 작업물 01"
-        onclick="openLightbox()"
-      >
+     
+<img
+  class="artwork"
+  id="mainArtwork"
+  src="work01.jpg"
+  alt="LG전자 베스트샵 카드뉴스 1"
+  onclick="openLightbox()"
+>
+
+<div class="thumbnails">
+  <img src="work01.jpg" alt="표지" class="selected" onclick="changeArtwork(0)">
+  <img src="work01-02.jpg" alt="카드뉴스 2" onclick="changeArtwork(1)">
+  <img src="work01-03.jpg" alt="카드뉴스 3" onclick="changeArtwork(2)">
+  <img src="work01-04.jpg" alt="카드뉴스 4" onclick="changeArtwork(3)">
+  <img src="work01-05.jpg" alt="카드뉴스 5" onclick="changeArtwork(4)">
+  <img src="work01-06.jpg" alt="카드뉴스 6" onclick="changeArtwork(5)">
+  <img src="work01-07.jpg" alt="카드뉴스 7" onclick="changeArtwork(6)">
+  <img src="work01-08.jpg" alt="카드뉴스 8" onclick="changeArtwork(7)">
+</div>
+
+<p class="project-info">
+  카드뉴스 / LG전자 베스트샵 더현대 서울 / Open Sale
+</p>
+<p class="project-date">2026. 10. 02</p>
+
 
       <p class="hint">이미지를 클릭하면 크게 볼 수 있습니다.</p>
 
@@ -205,19 +259,46 @@
   </div>
 
   <script>
-    function openLightbox() {
-      document.getElementById("lightbox").classList.add("open");
-    }
+   
+const images = [
+  "work01.jpg",
+  "work01-02.jpg",
+  "work01-03.jpg",
+  "work01-04.jpg",
+  "work01-05.jpg",
+  "work01-06.jpg",
+  "work01-07.jpg",
+  "work01-08.jpg"
+];
 
-    function closeLightbox() {
-      document.getElementById("lightbox").classList.remove("open");
-    }
+let currentIndex = 0;
 
-    document.addEventListener("keydown", function(event) {
-      if (event.key === "Escape") {
-        closeLightbox();
-      }
-    });
+function changeArtwork(index) {
+  currentIndex = index;
+
+  document.getElementById("mainArtwork").src = images[index];
+
+  document.querySelectorAll(".thumbnails img").forEach((img, i) => {
+    img.classList.toggle("selected", i === index);
+  });
+
+  document.querySelector("#lightbox img").src = images[index];
+}
+
+function openLightbox() {
+  document.getElementById("lightbox").classList.add("open");
+}
+
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("open");
+}
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    closeLightbox();
+  }
+});
+
   </script>
 </body>
 </html>
