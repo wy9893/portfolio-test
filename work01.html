@@ -440,6 +440,9 @@ function slideThumbnails(direction) {
     Math.min(maxStart, thumbnailStart + direction)
   );
 
+  renderThumbnails();
+}
+
 async function loadProjectInfo() {
   try {
     
