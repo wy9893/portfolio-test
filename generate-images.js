@@ -66,11 +66,38 @@ const projects = coverFiles.map((cover) => {
     });
 
   // 상세 이미지 목록 자동 생성
+  
+const lgProjects = projects.filter((item) =>
+  /^work\d+$/i.test(item.id)
+);
+
+const paiksProjects = projects.filter((item) =>
+  /^paiks\d+$/i.test(item.id)
+);
+
+const bomonProjects = projects.filter((item) =>
+  /^bomon\d+$/i.test(item.id)
+);
+
+const kbpayProjects = projects.filter((item) =>
+  /^kbpay\d+$/i.test(item.id)
+);
+
+const projectLists = [
+  ["projects.json", lgProjects],
+  ["paiks-projects.json", paiksProjects],
+  ["bomon-projects.json", bomonProjects],
+  ["kbpay-projects.json", kbpayProjects]
+];
+
+projectLists.forEach(([filename, items]) => {
   fs.writeFileSync(
-    path.join(__dirname, project + "-images.json"),
-    JSON.stringify(images, null, 2),
+    path.join(__dirname, filename),
+    JSON.stringify(items, null, 2),
     "utf8"
   );
+});
+
 
   return {
     id: project,
