@@ -66,7 +66,23 @@ const projects = coverFiles.map((cover) => {
     });
 
   // 상세 이미지 목록 자동 생성
+
+fs.writeFileSync(
+  path.join(__dirname, project + "-images.json"),
+  JSON.stringify(images, null, 2),
+  "utf8"
+);
+
+return {
+  id: project,
+  cover: cover,
+  detail: project + ".html",
+  count: images.length,
+  title: title
+};
+});
   
+
 const lgProjects = projects.filter((item) =>
   /^work\d+$/i.test(item.id)
 );
@@ -98,22 +114,6 @@ projectLists.forEach(([filename, items]) => {
   );
 });
 
-
-  return {
-    id: project,
-    cover: cover,
-    detail: project + ".html",
-    count: images.length,
-    title: title
-  };
-});
-
-// 전체 프로젝트 목록 자동 생성
-fs.writeFileSync(
-  path.join(__dirname, "projects.json"),
-  JSON.stringify(projects, null, 2),
-  "utf8"
-);
 
 // 제목 정보 자동 생성
 // 기존 JSON은 수정하지 않고 별도 파일 생성
