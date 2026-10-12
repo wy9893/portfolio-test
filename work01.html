@@ -3,8 +3,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>작업물 01 | CitrusAvenue</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Project</title>
 
   <style>
     * {
@@ -13,33 +13,32 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: #f8f7f3;
-      color: #222;
+      font-family: Arial, sans-serif;
+      color: #777;
     }
 
-   .page {
-    min-height: 100vh;
-    background: #f8f7f3;
-}
+    .page {
+      min-height: 100vh;
+      padding: 45px 30px 70px;
+    }
 
-    .content {
-      max-width: 1100px;
+    .container {
+      width: 100%;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 70px 30px 120px;
     }
 
     .back {
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid #999;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 48px;
-      height: 48px;
-      border: 2px solid #888;
-      border-radius: 50%;
-      color: #888;
+      color: #999;
       text-decoration: none;
-      margin: 50px 0 60px;
     }
 
     .back svg {
@@ -47,133 +46,73 @@
       height: 30px;
     }
 
-.cover {
-  height: 49vw;
-  max-height: none;
-  min-height: 300px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 15%;
-  text-align: center;
-  color: white;
-}
+    .brand-logo {
+      display: block;
+      width: 250px;
+      max-width: 75%;
+      height: auto;
+      margin: 55px auto 75px;
+    }
 
-.cover p {
-  margin: 0 0 8px;
-  font-family: 'Chetta Vissto', Georgia, serif;
-  font-size: clamp(17px, 2.4vw, 30px);
-}
-@font-face {
-  font-family: 'Chetta Vissto';
-  src: url('./ChettaVissto.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+    .main-artwork {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      max-height: 650px;
+      height: auto;
+      margin: 0 auto;
+      object-fit: contain;
+      cursor: zoom-in;
+    }
 
-.cover h1 {
-  margin: 0;
-  font-family: 'Chetta Vissto', Georgia, serif;
-  font-weight: normal;
-  font-size: clamp(42px, 6vw, 84px);
-  line-height: 1;
-}
+    .thumbnail-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 30px;
+    }
 
-.brand-logo {
-  display: block;
-  width: 250px;
-  max-width: 75%;
-  height: auto;
-  margin: 0 auto 50px;
-}
+    .thumb-arrow {
+      flex: 0 0 28px;
+      border: 0;
+      background: transparent;
+      color: #888;
+      font-size: 36px;
+      cursor: pointer;
+      padding: 0;
+    }
 
-    .artwork {
-  display: block;
-  width: 100%;
-  max-width: 450px;
-  height: auto;
-  margin: 0 auto;
-  cursor: zoom-in;
-}
+    .thumb-arrow:disabled {
+      opacity: .25;
+      cursor: default;
+    }
 
+    .thumbnails {
+      flex: 1;
+      min-width: 0;
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 8px;
+    }
 
-.thumbnail-slider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  max-width: 950px;
-  margin: 28px auto 0;
-}
+    .thumbnail {
+      width: 100%;
+      aspect-ratio: 1 / 1.35;
+      object-fit: cover;
+      cursor: pointer;
+      opacity: .65;
+      border: 2px solid transparent;
+    }
 
-.thumbnail-window {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.thumbnails {
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 6px;
-}
-
-.thumbnails img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  cursor: pointer;
-  opacity: 0.65;
-  border: 2px solid transparent;
-  box-sizing: border-box;
-}
-
-.thumbnails img.selected {
-  opacity: 1;
-  border-color: #888;
-}
-
-.thumb-arrow {
-  flex: 0 0 30px;
-  border: none;
-  background: transparent;
-  color: #777;
-  font-size: 36px;
-  cursor: pointer;
-  padding: 0;
-}
-
-.thumb-arrow:disabled {
-  opacity: 0.25;
-  cursor: default;
-}
-
-.thumbnail-slider:not(.has-overflow) .thumb-arrow {
-  display: none;
-}
-
-.thumbnail-slider:not(.has-overflow) {
-  max-width: 850px;
-}
-
-
-.project-info {
-  margin: 40px 0 12px;
-  text-align: center;
-  font-size: 15px;
-}
-
-.project-date {
-  margin: 0;
-  text-align: center;
-  font-size: 15px;
-}
+    .thumbnail.active {
+      opacity: 1;
+      border-color: #777;
+    }
 
     .hint {
       text-align: center;
-      color: #888;
       font-size: 13px;
+      color: #999;
       margin-top: 20px;
     }
 
@@ -181,11 +120,11 @@
       display: none;
       position: fixed;
       inset: 0;
-      z-index: 100;
-      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      background: rgba(0, 0, 0, .94);
       align-items: center;
       justify-content: center;
-      padding: 60px;
+      padding: 55px;
     }
 
     .lightbox.open {
@@ -193,144 +132,90 @@
     }
 
     .lightbox img {
-      display: block;
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
     }
 
-    .close {
+    .lightbox-close {
       position: absolute;
-      top: 20px;
-      right: 25px;
-      border: 0;
+      right: 20px;
+      top: 15px;
       background: none;
+      border: none;
       color: white;
       font-size: 38px;
       cursor: pointer;
     }
 
-    @media (max-width: 600px) {
-      .content {
-        padding: 35px 20px 80px;
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: white;
+      font-size: 50px;
+      cursor: pointer;
+    }
+
+    .lightbox-prev { left: 10px; }
+    .lightbox-next { right: 10px; }
+
+    @media (max-width: 650px) {
+      .page {
+        padding: 25px 20px 55px;
+      }
+
+      .back {
+        width: 42px;
+        height: 42px;
+      }
+
+      .brand-logo {
+        width: 120px;
+        max-width: 75%;
+        margin: 35px auto 45px;
+      }
+
+      .main-artwork {
+        max-height: none;
+      }
+
+      .thumbnail-area {
+        gap: 5px;
+        margin-top: 20px;
+      }
+
+      .thumb-arrow {
+        flex-basis: 18px;
+        font-size: 28px;
+      }
+
+      .thumbnails {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        gap: 4px;
+      }
+
+      .thumbnail {
+        border-width: 1px;
       }
 
       .lightbox {
-        padding: 25px;
+        padding: 45px 30px;
       }
     }
-    
-.lightbox-prev,
-.lightbox-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: white;
-  font-size: 60px;
-  font-weight: 200;
-  cursor: pointer;
-  padding: 10px 20px;
-  z-index: 101;
-}
-
-.lightbox-prev {
-  left: 20px;
-}
-
-.lightbox-next {
-  right: 20px;
-}
-
-.lightbox-count {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  font-size: 14px;
-  letter-spacing: 2px;
-}
-
-@media (max-width: 600px) {
-  .lightbox-prev {
-    left: 0;
-  }
-
-  .lightbox-next {
-    right: 0;
-  }
-
-  .lightbox-prev,
-  .lightbox-next {
-    font-size: 42px;
-    padding: 10px;
-  }
-}
-
-@media (max-width: 650px) {
-  .brand-logo {
-    width: 100px;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto 25px;
-  }
-  
-.cover {
-  height: 49vw;
-  min-height: 0;
-  padding: 0 20px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.cover > div {
-    width: 100%;
-    text-align: center;
-    margin-top: 0;
-    transform: none;
-}
-
-.cover p {
-    font-size: clamp(15px, 3.4vw, 20px);
-    margin-bottom: 5px;
-}
-
-.cover h1 {
-    font-size: clamp(40px, 8vw, 56px);
-}
-/* 상세 페이지 상단 표지 제거 */
-.cover {
-    display: none !important;
-}
-
-/* 작업물 영역 위쪽 여백 조정 */
-.content {
-    padding-top: 20px;
-}
-  
   </style>
 </head>
 
 <body>
   <div class="page">
-
-    <header class="cover">
-      <div>
-        <p>CitrusAvenue's</p>
-        <h1>Portfolio</h1>
-      </div>
-    </header>
-
-    <main class="content">
+    <div class="container">
 
       <a href="lg-bestshop.html" class="back"
          aria-label="작업물 목록으로 돌아가기">
-        <svg viewBox="0 0 48 48" fill="none"
-             xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 48 48" fill="none">
           <path d="M22 7L5 24L22 41"
                 stroke="currentColor"
                 stroke-width="2.5"
@@ -343,236 +228,164 @@
         </svg>
       </a>
 
-      <img
-  class="brand-logo"
-  src="./lg-bestshop.svg"
-  alt="LG전자 베스트샵"
->
+      <img class="brand-logo"
+           src="./lg-bestshop.svg"
+           alt="LG전자 베스트샵">
 
-     
-<img
-  class="artwork"
-  id="mainArtwork"
-  src="work01.jpg"
-  alt="LG전자 베스트샵 카드뉴스 1"
-  onclick="openLightbox()"
->
+      <img id="mainArtwork"
+           class="main-artwork"
+           src="work01.jpg"
+           alt="작업물 메인 이미지">
 
+      <div class="thumbnail-area">
+        <button id="thumbPrev" class="thumb-arrow"
+                aria-label="이전 썸네일">‹</button>
 
-<div class="thumbnail-slider" id="thumbnailSlider">
+        <div id="thumbnails" class="thumbnails"></div>
 
-  <button class="thumb-arrow" id="thumbPrev"
-          onclick="slideThumbnails(-1)"
-          aria-label="이전 썸네일">‹</button>
-
-  <div class="thumbnail-window">
-    <div class="thumbnails" id="thumbnailTrack"></div>
-  </div>
-
-  <button class="thumb-arrow" id="thumbNext"
-          onclick="slideThumbnails(1)"
-          aria-label="다음 썸네일">›</button>
-
-</div>
-
-
-
-<p class="project-info" id="projectTitle" style="display:none;"></p>
-<p class="project-date" id="projectDate" style="display:none;"></p>
-
+        <button id="thumbNext" class="thumb-arrow"
+                aria-label="다음 썸네일">›</button>
+      </div>
 
       <p class="hint">이미지를 클릭하면 크게 볼 수 있습니다.</p>
 
-    </main>
+    </div>
   </div>
 
- 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div id="lightbox" class="lightbox">
+    <button id="lightboxClose" class="lightbox-close"
+            aria-label="닫기">×</button>
+    <button id="lightboxPrev" class="lightbox-prev"
+            aria-label="이전 이미지">‹</button>
+    <img id="lightboxImage" alt="확대 이미지">
+    <button id="lightboxNext" class="lightbox-next"
+            aria-label="다음 이미지">›</button>
+  </div>
 
-  <button class="close"
-          onclick="closeLightbox()"
-          aria-label="닫기">×</button>
+  <script>
+    let images = [];
+    let currentIndex = 0;
+    let thumbStart = 0;
+    const thumbsPerPage = 8;
 
-  <button class="lightbox-prev"
-          onclick="event.stopPropagation(); moveArtwork(-1)"
-          aria-label="이전 이미지">‹</button>
+    const mainArtwork = document.getElementById("mainArtwork");
+    const thumbnails = document.getElementById("thumbnails");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
 
-  <img src="work01.jpg"
-       alt="확대 이미지"
-       onclick="event.stopPropagation()">
+    async function loadImages() {
+      try {
+        const response = await fetch("./work01-images.json");
+        if (!response.ok) throw new Error("이미지 목록 오류");
 
-  <button class="lightbox-next"
-          onclick="event.stopPropagation(); moveArtwork(1)"
-          aria-label="다음 이미지">›</button>
+        images = await response.json();
 
-  <div class="lightbox-count" id="lightboxCount">1 / 8</div>
+        if (!Array.isArray(images) || images.length === 0) {
+          return;
+        }
 
-</div>
-
-<script>
-let images = [];
-
-async function loadImages() {
-  try {
-    const response = await fetch("./work01-images.json");
-
-    if (!response.ok) {
-      throw new Error("이미지 목록을 불러오지 못했습니다.");
+        currentIndex = 0;
+        thumbStart = 0;
+        showImage(0);
+      } catch (error) {
+        console.error("이미지를 불러오지 못했습니다.", error);
+      }
     }
 
-    images = await response.json();
+    function showImage(index) {
+      if (!images.length) return;
 
-    if (images.length === 0) {
-      throw new Error("등록된 이미지가 없습니다.");
+      currentIndex = (index + images.length) % images.length;
+      mainArtwork.src = images[currentIndex];
+
+      if (currentIndex < thumbStart ||
+          currentIndex >= thumbStart + thumbsPerPage) {
+        thumbStart = Math.floor(currentIndex / thumbsPerPage)
+                     * thumbsPerPage;
+      }
+
+      renderThumbnails();
+
+      if (lightbox.classList.contains("open")) {
+        lightboxImage.src = images[currentIndex];
+      }
     }
 
-    changeArtwork(0);
-  } catch (error) {
-    console.error(error);
-  }
-}
+    function renderThumbnails() {
+      thumbnails.innerHTML = "";
 
+      images.slice(thumbStart, thumbStart + thumbsPerPage)
+        .forEach((src, offset) => {
+          const index = thumbStart + offset;
+          const img = document.createElement("img");
 
-let currentIndex = 0;
-let thumbnailStart = 0;
-const visibleCount = 8;
+          img.src = src;
+          img.alt = "작업물 " + (index + 1);
+          img.className = "thumbnail";
 
-// 썸네일 생성 및 표시
-function renderThumbnails() {
-  const track = document.getElementById("thumbnailTrack");
-  const slider = document.getElementById("thumbnailSlider");
+          if (index === currentIndex) {
+            img.classList.add("active");
+          }
 
-  const hasOverflow = images.length > visibleCount;
-  slider.classList.toggle("has-overflow", hasOverflow);
+          img.addEventListener("click", () => showImage(index));
+          thumbnails.appendChild(img);
+        });
 
-  const visibleImages = images.slice(
-    thumbnailStart,
-    thumbnailStart + visibleCount
-  );
+      document.getElementById("thumbPrev").disabled =
+        thumbStart === 0;
 
-  track.innerHTML = "";
+      document.getElementById("thumbNext").disabled =
+        thumbStart + thumbsPerPage >= images.length;
+    }
 
-  visibleImages.forEach((src, offset) => {
-    const index = thumbnailStart + offset;
-    const img = document.createElement("img");
+    document.getElementById("thumbPrev").onclick = () => {
+      thumbStart = Math.max(0, thumbStart - thumbsPerPage);
+      renderThumbnails();
+    };
 
-    img.src = src;
-    img.alt = index === 0 ? "표지" : "카드뉴스 " + (index + 1);
-    img.classList.toggle("selected", index === currentIndex);
-    img.onclick = () => changeArtwork(index);
+    document.getElementById("thumbNext").onclick = () => {
+      thumbStart = Math.min(
+        Math.floor((images.length - 1) / thumbsPerPage)
+          * thumbsPerPage,
+        thumbStart + thumbsPerPage
+      );
+      renderThumbnails();
+    };
 
-    track.appendChild(img);
-  });
+    mainArtwork.onclick = () => {
+      if (!images.length) return;
+      lightbox.classList.add("open");
+      lightboxImage.src = images[currentIndex];
+    };
 
-  document.getElementById("thumbPrev").disabled =
-    thumbnailStart === 0;
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+    }
 
-  document.getElementById("thumbNext").disabled =
-    thumbnailStart >= images.length - visibleCount;
-}
+    document.getElementById("lightboxClose").onclick =
+      closeLightbox;
 
-// 썸네일 좌우 이동
-function slideThumbnails(direction) {
-  const maxStart = Math.max(0, images.length - visibleCount);
+    document.getElementById("lightboxPrev").onclick = () => {
+      showImage(currentIndex - 1);
+    };
 
-  thumbnailStart = Math.max(
-    0,
-    Math.min(maxStart, thumbnailStart + direction)
-  );
+    document.getElementById("lightboxNext").onclick = () => {
+      showImage(currentIndex + 1);
+    };
 
-  renderThumbnails();
-}
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
 
-async function loadProjectInfo() {
-  try {
-    
-const response = await fetch("./project-info-generated.json");
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("open")) return;
 
-    if (!response.ok) throw new Error("작업물 정보를 불러오지 못했습니다.");
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowLeft") showImage(currentIndex - 1);
+      if (event.key === "ArrowRight") showImage(currentIndex + 1);
+    });
 
-    const allInfo = await response.json();
-
-    const projectId =
-      window.location.pathname.match(/work\d+(?=\.html)/i)?.[0] || "work01";
-
-    const info = allInfo[projectId];
-    if (!info) return;
-
-    document.getElementById("projectTitle").textContent =
-      info.title || "";
-
-    document.getElementById("projectDate").textContent =
-      info.date || "";
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-loadProjectInfo();
-
-  loadImages();
-
-// 큰 이미지 변경
-function changeArtwork(index) {
-  currentIndex = index;
-
-  document.getElementById("mainArtwork").src = images[index];
-  document.querySelector("#lightbox img").src = images[index];
-
-  document.getElementById("lightboxCount").textContent =
-    (index + 1) + " / " + images.length;
-
-  // 선택된 이미지가 썸네일 화면 밖에 있으면 자동 이동
-  if (index < thumbnailStart) {
-    thumbnailStart = index;
-  } else if (index >= thumbnailStart + visibleCount) {
-    thumbnailStart = index - visibleCount + 1;
-  }
-
-  renderThumbnails();
-}
-
-// 확대 화면 이미지 이동
-function moveArtwork(direction) {
-  const nextIndex =
-    (currentIndex + direction + images.length) % images.length;
-
-  changeArtwork(nextIndex);
-}
-
-// 확대 화면 열기
-function openLightbox() {
-  document.getElementById("lightbox").classList.add("open");
-}
-
-// 확대 화면 닫기
-function closeLightbox() {
-  document.getElementById("lightbox").classList.remove("open");
-}
-
-// 키보드 조작
-document.addEventListener("keydown", function(event) {
-  const lightbox = document.getElementById("lightbox");
-
-  if (event.key === "Escape") {
-    closeLightbox();
-  }
-
-  if (!lightbox.classList.contains("open")) return;
-
-  if (event.key === "ArrowLeft") {
-    moveArtwork(-1);
-  }
-
-  if (event.key === "ArrowRight") {
-    moveArtwork(1);
-  }
-});
-
-// 페이지가 열리면 썸네일 생성
-loadImages();
-</script>
-
-
+    loadImages();
+  </script>
 </body>
 </html>
