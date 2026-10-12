@@ -134,6 +134,39 @@
 }
 
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 55px auto 0;
+}
+
+.pagination button {
+  min-width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: #777;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  color: #222;
+  font-weight: bold;
+  border-bottom: 2px solid #222;
+}
+
+.pagination button:hover {
+  color: #222;
+}
+
+.pagination button:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
   </style>
 </head>
 
@@ -168,10 +201,111 @@
         alt="LG전자 베스트샵"
       >
 
-      <div class="gallery">
-        <a href="work01.html"><img src="work01.jpg" alt="작업물 1"></a>
-      </div>
+      
+<div class="gallery" id="projectGallery"></div>
+
+<div class="pagination" id="pagination"></div>
+
     </main>
   </div>
+  
+<script>
+const projectsPerPage = 12;
+const pageNumbersPerGroup = 5;
+
+let projects = [];
+let currentPage = 1;
+
+async function loadProjects() {
+  try {
+    const response = await fetch("./projects.json");
+
+    if (!response.ok) {
+      throw new Error("작업물 목록을 불러오지 못했습니다.");
+    }
+
+    projects = await response.json();
+    renderProjects();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function renderProjects() {
+  const gallery = document.getElementById("projectGallery");
+  gallery.innerHTML = "";
+
+  const start = (currentPage - 1) * projectsPerPage;
+  const visibleProjects = projects.slice(
+    start,
+    start + projectsPerPage
+  );
+
+  visibleProjects.forEach((project) => {
+    const link = document.createElement("a");
+    link.href = project.detail;
+
+    const img = document.createElement("img");
+    img.src = project.cover;
+    img.alt = project.id + " 작업물";
+
+    link.appendChild(img);
+    gallery.appendChild(link);
+  });
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const pagination = document.getElementById("pagination");
+  pagination.innerHTML = "";
+
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+  if (totalPages <= 1) return;
+
+  const groupStart =
+    Math.floor((currentPage - 1) / pageNumbersPerGroup) *
+      pageNumbersPerGroup + 1;
+
+  const groupEnd = Math.min(
+    totalPages,
+    groupStart + pageNumbersPerGroup - 1
+  );
+
+  function addButton(label, targetPage, disabled, active = false) {
+    const button = document.createElement("button");
+    button.textContent = label;
+    button.disabled = disabled;
+    button.classList.toggle("active", active);
+    button.onclick = () => {
+      currentPage = targetPage;
+      renderProjects();
+      document.getElementById("projectGallery")
+        .scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    pagination.appendChild(button);
+  }
+
+  if (totalPages > pageNumbersPerGroup) {
+    addButton("‹", Math.max(1, groupStart - 1), groupStart === 1);
+  }
+
+  for (let page = groupStart; page <= groupEnd; page++) {
+    addButton(String(page), page, false, page === currentPage);
+  }
+
+  if (totalPages > pageNumbersPerGroup) {
+    addButton(
+      "›",
+      Math.min(totalPages, groupEnd + 1),
+      groupEnd === totalPages
+    );
+  }
+}
+
+loadProjects();
+</script>
+
 </body>
 </html>
