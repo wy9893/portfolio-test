@@ -445,7 +445,9 @@ function slideThumbnails(direction) {
 
 async function loadProjectInfo() {
   try {
-    const response = await fetch("./project-info.json");
+    
+const response = await fetch("./project-info-generated.json");
+
     if (!response.ok) throw new Error("작업물 정보를 불러오지 못했습니다.");
 
     const allInfo = await response.json();
