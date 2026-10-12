@@ -51,33 +51,35 @@
     }
 
 .cover {
-  height: 43vw;
-  max-height: 650px;
+  height: 49vw;
+  max-height: none;
   min-height: 300px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding-top: 15%;
-  color: white;
   text-align: center;
+  color: white;
 }
 
 .cover p {
-  margin: 0;
-  font-size: 24px;
+  margin: 0 0 8px;
+  font-family: 'Chetta Vissto', Georgia, serif;
+  font-size: clamp(17px, 2.4vw, 30px);
 }
-
 @font-face {
-  font-family: "ChettaVissto";
-  src: url("./ChettaVissto.ttf") format("truetype");
+  font-family: 'Chetta Vissto';
+  src: url('./ChettaVissto.ttf') format('truetype');
   font-weight: normal;
+  font-style: normal;
 }
 
 .cover h1 {
   margin: 0;
-  font-family: "ChettaVissto", cursive;
-  font-size: clamp(36px, 5vw, 70px);
+  font-family: 'Chetta Vissto', Georgia, serif;
   font-weight: normal;
+  font-size: clamp(42px, 6vw, 84px);
+  line-height: 1;
 }
 
 .brand-logo {
