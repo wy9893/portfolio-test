@@ -183,6 +183,56 @@
         padding: 25px;
       }
     }
+    
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 60px;
+  font-weight: 200;
+  cursor: pointer;
+  padding: 10px 20px;
+  z-index: 101;
+}
+
+.lightbox-prev {
+  left: 20px;
+}
+
+.lightbox-next {
+  right: 20px;
+}
+
+.lightbox-count {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 600px) {
+  .lightbox-prev {
+    left: 0;
+  }
+
+  .lightbox-next {
+    right: 0;
+  }
+
+  .lightbox-prev,
+  .lightbox-next {
+    font-size: 42px;
+    padding: 10px;
+  }
+}
+
   </style>
 </head>
 
@@ -251,15 +301,32 @@
     </main>
   </div>
 
-  <div class="lightbox" id="lightbox"
-       onclick="closeLightbox()">
-    <button class="close" onclick="closeLightbox()"
-            aria-label="닫기">×</button>
-    <img src="work01.jpg" alt="확대 이미지">
-  </div>
+ 
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
 
-  <script>
-   
+  <button class="close"
+          onclick="closeLightbox()"
+          aria-label="닫기">×</button>
+
+  <button class="lightbox-prev"
+          onclick="event.stopPropagation(); moveArtwork(-1)"
+          aria-label="이전 이미지">‹</button>
+
+  <img src="work01.jpg"
+       alt="확대 이미지"
+       onclick="event.stopPropagation()">
+
+  <button class="lightbox-next"
+          onclick="event.stopPropagation(); moveArtwork(1)"
+          aria-label="다음 이미지">›</button>
+
+  <div class="lightbox-count" id="lightboxCount">1 / 8</div>
+
+</div>
+
+
+ 
+<script>
 const images = [
   "work01.jpg",
   "work01-02.jpg",
@@ -273,6 +340,7 @@ const images = [
 
 let currentIndex = 0;
 
+// 썸네일 클릭 시 큰 이미지 변경
 function changeArtwork(index) {
   currentIndex = index;
 
@@ -283,22 +351,48 @@ function changeArtwork(index) {
   });
 
   document.querySelector("#lightbox img").src = images[index];
+
+  document.getElementById("lightboxCount").textContent =
+    (index + 1) + " / " + images.length;
 }
 
+// 확대 화면에서 좌우 이미지 이동
+function moveArtwork(direction) {
+  const nextIndex =
+    (currentIndex + direction + images.length) % images.length;
+
+  changeArtwork(nextIndex);
+}
+
+// 이미지 확대
 function openLightbox() {
   document.getElementById("lightbox").classList.add("open");
 }
 
+// 확대 화면 닫기
 function closeLightbox() {
   document.getElementById("lightbox").classList.remove("open");
 }
 
+// 키보드 방향키 및 ESC
 document.addEventListener("keydown", function(event) {
+  const lightbox = document.getElementById("lightbox");
+
   if (event.key === "Escape") {
     closeLightbox();
   }
-});
 
-  </script>
+  if (!lightbox.classList.contains("open")) return;
+
+  if (event.key === "ArrowLeft") {
+    moveArtwork(-1);
+  }
+
+  if (event.key === "ArrowRight") {
+    moveArtwork(1);
+  }
+});
+</script>
+
 </body>
 </html>
