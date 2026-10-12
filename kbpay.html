@@ -22,13 +22,9 @@
     }
 
     .page {
-      min-height: 100vh;
-      background-image: url("portfolio-bg.jpg");
-      background-position: center top;
-      background-size: 100% auto;
-      background-repeat: no-repeat;
-    }
-
+    min-height: 100vh;
+    background-color: #f8f7f3;
+}
     
 .cover {
   height: 49vw;
@@ -116,31 +112,6 @@
       .content { padding: 35px 20px 80px; }
       .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .cover p { font-size: 16px; }
-      
-.cover {
-  height: 49vw;
-  min-height: 0;
-  padding: 0 20px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.cover > div {
-  width: 100%;
-  text-align: center;
-  margin-top: 10vw;
-  transform: none;
-}
-
-.brand-logo {
-  width: 100px;
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto 25px;
-}
-
     }
     
 
@@ -191,7 +162,21 @@
   opacity: 0.25;
   cursor: default;
 }
+/* 첫 화면을 제외한 페이지의 상단 표지 제거 */
+.cover {
+    display: none !important;
+}
 
+/* 표지 없이 콘텐츠 바로 표시 */
+.content {
+    padding-top: 60px;
+}
+
+@media (max-width: 600px) {
+    .content {
+        padding-top: 35px;
+    }
+}
   </style>
 </head>
 
@@ -205,7 +190,7 @@
     </header>
 
     <main class="content">
-<a href="index.html" class="back" aria-label="메인으로 돌아가기">
+      <a href="index.html" class="back" aria-label="메인으로 돌아가기">
     <svg viewBox="0 0 48 48" fill="none"
          xmlns="http://www.w3.org/2000/svg">
         <path d="M22 7L5 24L22 41"
@@ -223,7 +208,7 @@
       <img
         class="brand-logo"
         src="./kbpay.svg"
-        alt="KB Pay"
+        alt="LG전자 베스트샵"
       >
 
       
@@ -243,9 +228,7 @@ let currentPage = 1;
 
 async function loadProjects() {
   try {
-    
-const response = await fetch("./kbpay-projects.json");
-
+    const response = await fetch("./kbpay-projects.json");
 
     if (!response.ok) {
       throw new Error("작업물 목록을 불러오지 못했습니다.");
