@@ -62,3 +62,36 @@ fs.writeFileSync(
 );
 
 console.log("총 " + projects.length + "개 작업물 등록 완료");
+
+const templatePath = path.join(__dirname, "work01.html");
+
+if (fs.existsSync(templatePath)) {
+  const template = fs.readFileSync(templatePath, "utf8");
+
+  projects.forEach((project) => {
+    // 기존 첫 번째 작업물 페이지는 그대로 유지
+    if (project.id === "work01") return;
+
+    let html = template;
+
+    // 첫 번째 작업물의 이미지 경로를 새 작업물로 변경
+    html = html.replace(
+      /work01-images\.json/g,
+      project.id + "-images.json"
+    );
+
+    html = html.replace(
+      /work01\.jpg/g,
+      project.cover
+    );
+
+    // 상세 페이지 자동 생성
+    fs.writeFileSync(
+      path.join(__dirname, project.detail),
+      html,
+      "utf8"
+    );
+
+    console.log(project.detail + " 생성 완료");
+  });
+}
