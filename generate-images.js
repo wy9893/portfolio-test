@@ -14,9 +14,11 @@ const projectInfo = fs.existsSync(infoPath)
 // 대표 이미지 찾기
 // work01.jpg
 // work03_가을맞이 특별전.jpg
+
 const coverFiles = files.filter((file) =>
-  /^work\d+(?:_[^/\\]+)?\.(jpg|jpeg|png|webp)$/i.test(file)
+  /^(work|paiks|bomon|kbpay)\d+(?:_[^\\]+)?\.(jpg|jpeg|png|webp)$/i.test(file)
 );
+
 
 // 최신 작업물부터 정렬
 coverFiles.sort((a, b) => {
