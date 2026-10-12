@@ -22,8 +22,10 @@ const coverFiles = files.filter((file) =>
 
 // 최신 작업물부터 정렬
 coverFiles.sort((a, b) => {
-  const getNumber = (file) =>
-    Number(file.match(/^work(\d+)/i)[1]);
+  
+const getNumber = (file) =>
+  Number(file.match(/^(?:work|paiks|bomon|kbpay)(\d+)/i)[1]);
+
 
   return getNumber(b) - getNumber(a);
 });
