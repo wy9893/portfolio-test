@@ -3,13 +3,22 @@ const fs = require("fs");
 const path = require("path");
 
 const files = fs.readdirSync(__dirname);
+const extensions = "jpg|jpeg|png|webp";
 
-// work01.jpg, work02.jpg 같은 표지 파일 찾기
+// 기존 제목 정보도 유지
+const infoPath = path.join(__dirname, "project-info.json");
+const projectInfo = fs.existsSync(infoPath)
+  ? JSON.parse(fs.readFileSync(infoPath, "utf8"))
+  : {};
+
+// 대표 이미지 찾기
+// work01.jpg
+// work03_가을맞이 특별전.jpg
 const coverFiles = files.filter((file) =>
-  /^work\d+\.(jpg|jpeg|png|webp)$/i.test(file)
+  /^work\d+(?:_[^/\\]+)?\.(jpg|jpeg|png|webp)$/i.test(file)
 );
 
-// 작업물 번호순 정렬
+// 최신 작업물부터 정렬
 coverFiles.sort((a, b) => {
   const getNumber = (file) =>
     Number(file.match(/^work(\d+)/i)[1]);
@@ -18,19 +27,31 @@ coverFiles.sort((a, b) => {
 });
 
 const projects = coverFiles.map((cover) => {
-  const project = path.parse(cover).name;
+  const match = cover.match(/^work(\d+)(?:_(.+))?\.(jpg|jpeg|png|webp)$/i);
 
-  // 해당 프로젝트의 상세 이미지 찾기
+  const project = "work" + match[1];
+  const filenameTitle = match[2] || "";
+
+  // 기존 정보가 있으면 우선 사용
+  const info = projectInfo[project] || {};
+  const title = filenameTitle || info.title || project.toUpperCase();
+
+  // 상세 이미지 찾기
   const images = files
     .filter((file) => {
+      if (file === cover) return true;
+
       const pattern = new RegExp(
-        "^" + project + "(?:-\\d+)?\\.(jpg|jpeg|png|webp)$",
+        "^" + project + "-\\d+\\.(" + extensions + ")$",
         "i"
       );
 
       return pattern.test(file);
     })
     .sort((a, b) => {
+      if (a === cover) return -1;
+      if (b === cover) return 1;
+
       const getNumber = (file) => {
         const match = file.match(/-(\d+)\.[^.]+$/);
         return match ? Number(match[1]) : 1;
@@ -39,7 +60,7 @@ const projects = coverFiles.map((cover) => {
       return getNumber(a) - getNumber(b);
     });
 
-  // 각 작업물의 이미지 목록 생성
+  // 상세 이미지 목록 자동 생성
   fs.writeFileSync(
     path.join(__dirname, project + "-images.json"),
     JSON.stringify(images, null, 2),
@@ -50,37 +71,48 @@ const projects = coverFiles.map((cover) => {
     id: project,
     cover: cover,
     detail: project + ".html",
-    count: images.length
+    count: images.length,
+    title: title
   };
 });
 
-// 전체 작업물 목록 생성
+// 전체 프로젝트 목록 자동 생성
 fs.writeFileSync(
   path.join(__dirname, "projects.json"),
   JSON.stringify(projects, null, 2),
   "utf8"
 );
 
+// 제목 정보 자동 생성
+// 기존 JSON은 수정하지 않고 별도 파일 생성
+const generatedInfo = {};
+
+projects.forEach((project) => {
+  generatedInfo[project.id] = {
+    title: project.title,
+    date: ""
+  };
+});
+
+fs.writeFileSync(
+  path.join(__dirname, "project-info-generated.json"),
+  JSON.stringify(generatedInfo, null, 2),
+  "utf8"
+);
+
 console.log("총 " + projects.length + "개 작업물 등록 완료");
 
-const infoPath = path.join(__dirname, "project-info.json");
-
-const projectInfo = fs.existsSync(infoPath)
-  ? JSON.parse(fs.readFileSync(infoPath, "utf8"))
-  : {};
-
+// 상세 페이지 자동 생성
 const templatePath = path.join(__dirname, "work01.html");
 
 if (fs.existsSync(templatePath)) {
   const template = fs.readFileSync(templatePath, "utf8");
 
   projects.forEach((project) => {
-    // 기존 첫 번째 작업물 페이지는 그대로 유지
     if (project.id === "work01") return;
 
     let html = template;
 
-    // 첫 번째 작업물의 이미지 경로를 새 작업물로 변경
     html = html.replace(
       /work01-images\.json/g,
       project.id + "-images.json"
@@ -91,22 +123,23 @@ if (fs.existsSync(templatePath)) {
       project.cover
     );
 
-const info = projectInfo[project.id] || {};
+    // 제목 정보를 자동 생성된 JSON에서 읽도록 변경
+    html = html.replace(
+      /project-info\.json/g,
+      "project-info-generated.json"
+    );
 
-const title = info.title || project.id;
-const date = info.date || "";
+    // 기존 HTML 제목과 날짜도 변경
+    html = html.replace(
+      "카드뉴스 / LG전자 베스트샵 더현대 서울 / Open Sale",
+      project.title
+    );
 
-html = html.replace(
-  "카드뉴스 / LG전자 베스트샵 더현대 서울 / Open Sale",
-  title
-);
+    html = html.replace(
+      "2026. 10. 02",
+      ""
+    );
 
-html = html.replace(
-  "2026. 10. 02",
-  date
-);
-
-    // 상세 페이지 자동 생성
     fs.writeFileSync(
       path.join(__dirname, project.detail),
       html,
