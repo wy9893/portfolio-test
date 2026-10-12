@@ -7,66 +7,116 @@
   <title>CitrusAvenue Portfolio</title>
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
+      color: #171717;
+      background-color: #f8f7f3;
       font-family: Arial, sans-serif;
-      background: #f8f5ef;
-      color: #222;
     }
-    header {
-      background: #ef762a;
-      padding: 80px 24px;
+
+    .page {
+      min-height: 100vh;
+      background-image: url("portfolio-bg.jpg");
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: 100% auto;
+    }
+
+    .cover {
+      height: 43vw;
+      max-height: 650px;
+      min-height: 300px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 15%;
+      text-align: center;
+      color: white;
+    }
+
+    .cover h1 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-weight: normal;
+      font-size: clamp(42px, 6vw, 84px);
+      line-height: 1;
+    }
+
+    .cover p {
+      margin: 0 0 8px;
+      font-family: Georgia, serif;
+      font-size: clamp(17px, 2.4vw, 30px);
+    }
+
+    .content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 60px 24px 120px;
       text-align: center;
     }
-    header h1 {
-      font-size: clamp(36px, 7vw, 76px);
-      margin: 0;
+
+    .content h2 {
+      font-family: Georgia, serif;
+      font-weight: normal;
+      font-size: clamp(32px, 4vw, 48px);
+      margin-bottom: 90px;
     }
-    header p { font-size: 20px; }
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 60px 24px;
-    }
-    .gallery {
+
+    .clients {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 85px 70px;
+      max-width: 720px;
+      margin: 0 auto;
     }
-    .item {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      cursor: pointer;
+
+    .client {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #333;
+      font-size: 25px;
+      font-weight: bold;
       transition: transform .2s;
     }
-    .item:hover { transform: translateY(-5px); }
-    .preview {
-      aspect-ratio: 4 / 5;
-      background: #e8e2d8;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      font-size: 24px;
+
+    .client:hover {
+      transform: scale(1.05);
     }
+
     @media (max-width: 650px) {
-      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .cover { padding-top: 16%; }
+      .content { padding-top: 30px; }
+      .content h2 { margin-bottom: 45px; }
+      .clients { gap: 35px 15px; }
+      .client { font-size: 16px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>CitrusAvenue</h1>
-    <p>Creative Portfolio</p>
-  </header>
+  <div class="page">
 
-  <main>
-    <h2>Our Works</h2>
-    <div class="gallery">
-      <div class="item"><div class="preview">01</div><h3>LG전자 베스트샵</h3></div>
-      <div class="item"><div class="preview">02</div><h3>Branding</h3></div>
-      <div class="item"><div class="preview">03</div><h3>Promotion</h3></div>
-    </div>
-  </main>
+    <header class="cover">
+      <div>
+        <p>CitrusAvenue's</p>
+        <h1>Portfolio</h1>
+      </div>
+    </header>
+
+    <main class="content">
+      <h2>Contractor</h2>
+
+      <div class="clients">
+        <a class="client" href="#">LG전자 BEST SHOP</a>
+        <a class="client" href="#">Paik's DABANG</a>
+        <a class="client" href="#">청담봄온</a>
+        <a class="client" href="#">KB Pay</a>
+      </div>
+    </main>
+
+  </div>
 </body>
 </html>
