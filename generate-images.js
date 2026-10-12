@@ -4,17 +4,23 @@ const path = require("path");
 
 const files = fs.readdirSync(__dirname);
 
-const projects = new Set();
+// work01.jpg, work02.jpg 같은 표지 파일 찾기
+const coverFiles = files.filter((file) =>
+  /^work\d+\.(jpg|jpeg|png|webp)$/i.test(file)
+);
 
-files.forEach((file) => {
-  const match = file.match(/^(work\d+)(?:-\d+)?\.(jpg|jpeg|png|webp)$/i);
+// 작업물 번호순 정렬
+coverFiles.sort((a, b) => {
+  const getNumber = (file) =>
+    Number(file.match(/^work(\d+)/i)[1]);
 
-  if (match) {
-    projects.add(match[1]);
-  }
+  return getNumber(a) - getNumber(b);
 });
 
-projects.forEach((project) => {
+const projects = coverFiles.map((cover) => {
+  const project = path.parse(cover).name;
+
+  // 해당 프로젝트의 상세 이미지 찾기
   const images = files
     .filter((file) => {
       const pattern = new RegExp(
@@ -33,13 +39,26 @@ projects.forEach((project) => {
       return getNumber(a) - getNumber(b);
     });
 
-  const output = path.join(__dirname, project + "-images.json");
-
+  // 각 작업물의 이미지 목록 생성
   fs.writeFileSync(
-    output,
+    path.join(__dirname, project + "-images.json"),
     JSON.stringify(images, null, 2),
     "utf8"
   );
 
-  console.log(project + ": " + images.length + " images");
+  return {
+    id: project,
+    cover: cover,
+    detail: project + ".html",
+    count: images.length
+  };
 });
+
+// 전체 작업물 목록 생성
+fs.writeFileSync(
+  path.join(__dirname, "projects.json"),
+  JSON.stringify(projects, null, 2),
+  "utf8"
+);
+
+console.log("총 " + projects.length + "개 작업물 등록 완료");
